@@ -1,0 +1,53 @@
+extend type Query {
+    getAllProducts(first: Int, page: Int): ProductPaginator!
+        @field(
+            resolver: "App\\GraphQL\\Queries\\CatalogResolver@getAllProducts"
+        )
+
+    getProduct(id: ID, sku: String, url_key: String): ProductEntity!
+        @field(
+            resolver: "App\\GraphQL\\Queries\\CatalogResolver@getProduct"
+        )
+
+    getProductsByCategory(first: Int, page: Int, category: String): ProductPaginator!
+        @field(
+            resolver: "App\\GraphQL\\Queries\\CatalogResolver@getProductsByCategory"
+        )
+
+    getProductsById(productIds: [ID!]): [ProductEntity!]!
+        @field(
+            resolver: "App\\GraphQL\\Queries\\CatalogResolver@getProductsById"
+        )
+        
+}
+
+type PaginatorInfo {
+    currentPage: Int!
+    lastPage: Int!
+    perPage: Int!
+    total: Int!
+    hasMorePages: Boolean!
+}
+
+type ProductPaginator {
+    products: [ProductEntity!]!
+    paginatorInfo: PaginatorInfo!
+}
+
+type ProductEntity {
+    id: ID!
+    sku: String!
+    url_key: String!
+    title: String!
+    category: String!
+    price: String!
+    discountedPercentage: String!
+    stock: String!
+    thumbnail: String!
+    productAttributes: [ProductAttributes]
+}
+
+type ProductAttributes {
+    attribute_code: String!
+    attribute_value: String!
+}

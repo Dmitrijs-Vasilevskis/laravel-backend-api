@@ -9,12 +9,15 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = 'product_entity';
+
     protected $fillable = [
-        'product_sku',
-     'product_name',
-      'product_price',
-       'product_category',
-        'product_description',
-         'product_qty'
-        ];
+        'sku',
+        'title',
+        'category',
+        'price',
+        'discountPercentage',
+        'stock',
+        'thumbnail',
+    ];
 }

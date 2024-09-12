@@ -1,0 +1,112 @@
+extend type Query {
+    getQuoteById(customer_id: ID!): Quote!
+        @field(resolver: "App\\GraphQL\\Queries\\QuoteResolver@getQuoteById")
+
+    getQuoteItems(quote_id: ID!): [QuoteItem!]!
+        @field(resolver: "App\\GraphQL\\Queries\\QuoteResolver@getQuoteItems")
+
+    getActiveQuoteByCustomerId(customer_id: ID!): Quote! 
+        @field(resolver: "App\\GraphQL\\Queries\\QuoteResolver@getActiveQuoteByCustomerId")
+}
+
+extend type Mutation {
+    createQuote(input: CreateQuoteInput): Quote!
+        @field(resolver: "App\\GraphQL\\Mutations\\QuoteMutation@createQuote")
+    initQuote(input: InitQuoteInput): Quote!
+        @field(resolver: "App\\GraphQL\\Mutations\\QuoteMutation@createQuote")
+}
+
+type Quote {
+    entity_id: ID!
+    is_active: Boolean!
+    items_count: Int!
+    items_qty: Float!
+    grand_total: Float!
+    checkout_method: String
+    customer_id: ID
+    customer_email: String
+    customer_firstname: String
+    customer_lastname: String
+    customer_is_guest: Boolean!
+    coupon_code: String
+    subtotal: Float!
+    base_subtotal: Float!
+    created_at: String!
+    updated_at: String!
+    items: [QuoteItem]
+}
+
+type QuoteAddress {
+    address_id: ID!
+    quote_id: ID!
+    customer_id: ID
+    email: String!
+    firstname: String!
+    lastname: String!
+    street: String!
+    city: String!
+    region: String
+    postcode: String!
+    country_code: String!
+    telephone: String!
+    same_as_billing: Boolean!
+    shipping_method: String
+    shipping_description: String
+    subtotal: Float!
+    subtotal_with_discount: Float!
+    shipping_amount: Float!
+    discount_amount: Float!
+    grand_total: Float!
+    created_at: String!
+    updated_at: String!
+}
+
+type QuoteItem {
+    item_id: ID!
+    quote_id: ID!
+    product_id: ID!
+    sku: String!
+    name: String!
+    weight: Float!
+    qty: Int!
+    price: Float!
+    discount_percent: Float!
+    discount_amount: Float!
+}
+
+# input CreateQuoteInput {
+#     items_count: Int
+#     items_qty: Float
+#     grand_total: Float
+#     checkout_method: String
+#     customer_id: ID
+#     customer_email: String
+#     customer_firstname: String
+#     customer_lastname: String
+#     coupon_code: String
+#     subtotal: Float
+#     base_subtotal: Float
+
+# }
+
+input CustomerInput {
+    customer_id: ID!
+    customer_email: String!
+    customer_firstname: String!
+    customer_lastname: String!
+    customer_is_guest: Boolean!
+}
+
+input QuoteItemInput {
+    product_id: ID!
+    sku: String!
+    qty: Int!
+    title: String!
+    discount_percent: Float!
+    price: Float!
+}
+
+input InitQuoteInput {
+    customer: CustomerInput!
+    item: [QuoteItemInput!]!
+}

@@ -1,0 +1,13 @@
+extend type Query {
+    getCategory(id: ID, category_code: String): Category!
+    @field(resolver: "App\\GraphQL\\Queries\\CategoryResolver@getCategoryByArgs")
+    
+    getAllCategories: [Category!]!
+    @field(resolver: "App\\GraphQL\\Queries\\CategoryResolver@getAllCategories")
+}
+
+type Category {
+    id: ID!
+    category_code: String!
+    category_title: String!
+}

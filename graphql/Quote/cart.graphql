@@ -1,0 +1,15 @@
+extend type Query {
+    getCartItems(quote_id: ID!): [CartItems!]! @field(resolver: "App\\GraphQL\\Queries\\CartResolver@getCartItems")
+}
+
+type CartItems {
+    id: ID!
+    sku: String!
+    url_key: String!
+    qty: Int!
+    title: String!
+    category: String!
+    price: String!
+    discountPercentage: String!
+    thumbnail: String!
+}
